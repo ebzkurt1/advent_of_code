@@ -1,38 +1,27 @@
-use std::fs::File;
-use std::io::{self, prelude::*, BufReader};
+fn convert_numbers(input_str: &str) -> String {
+    let result: String = input_str
+        .chars()
+        .map(|c| match c {
+            '1' => "one".to_string(),
+            '2' => "two".to_string(),
+            '3' => "three".to_string(),
+            '4' => "four".to_string(),
+            '5' => "five".to_string(),
+            '6' => "six".to_string(),
+            '7' => "seven".to_string(),
+            '8' => "eight".to_string(),
+            '9' => "nine".to_string(),
+            '0' => "zero".to_string(),
+            _ => c.to_string(),
+        })
+        .collect();
+    result
 
-fn main() -> io::Result<()> {
-    let file = File::open("input.txt")?;
-    let reader = BufReader::new(file);
-    let mut final_sum = 0;
-
-    for line in reader.lines() {
-        let mut vec = Vec::new();
-        for c in line?.chars(){
-            let num = match c.to_string().parse::<i32>() {
-                Ok(i) => i,
-                Err(_e) => -1,
-            };
-            if num >= 0 {
-                vec.push(num.to_string());
-            }
-        }
-        let mut str_num = String::new();
-        if vec.len() > 1 {
-            str_num.push_str(&vec[0]);
-            str_num.push_str(&vec[vec.len() - 1]);
-        }
-        else if vec.len() == 1 {
-            str_num.push_str(&vec[0]);
-            str_num.push_str(&vec[0]);
-        }
-        if str_num != "" {
-            let line_num = str_num.parse::<i32>();
-            final_sum += line_num.unwrap();
-        }
-    }
-    println!("{}", final_sum);
+}
 
 
-    Ok(())
+fn main() {
+    let input_str = "1asdgbrtrtwonineeight4th6cas7as";
+    let result = convert_numbers(input_str);
+    println!("{}", result);
 }
