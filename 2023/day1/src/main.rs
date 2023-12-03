@@ -48,7 +48,6 @@ fn find_number_words(input: &str) -> Vec<String> {
 fn get_numbers(number_vec: Vec<String>) -> u32 {
     let result = match number_vec.len() {
         0 => {
-            println!("No numbers found");
             0
         }
         1 => {
