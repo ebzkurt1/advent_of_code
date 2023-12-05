@@ -16,6 +16,8 @@ fn iterate_vec(input_vec: &Vec<Vec<char>>) -> u32 {
                     temp_row[c] = input_vec[r - 1][c];
                 } else if input_vec[r + 1][c] != '.' {
                     temp_row[c] = input_vec[r + 1][c];
+                } else {
+                    temp_row[c] = input_vec[r][c];
                 }
             }
             if input_vec[r - 1][c] != '.'{
