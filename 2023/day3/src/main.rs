@@ -29,6 +29,17 @@ fn get_number_indices(line: &str) -> (Vec<char>, Vec<Vec<u32>>) {
     (line_chars, number_indices)
 }
 
+fn get_star_indices(line: &str) -> Vec<u32> {
+    let mut star_indices: Vec<u32> = Vec::new();
+    for (index, c) in line.chars().enumerate() {
+        if c == '*' {
+            let u32_index: u32 = index.try_into().unwrap();
+            star_indices.push(u32_index);
+        }
+    }
+    star_indices
+}
+
 fn add_for_first_line(current_line: &str, next_line: &str, total: &mut u32) {
     let (current_chars, current_indices) = get_number_indices(current_line);
     let (next_chars, _) = get_number_indices(next_line);
