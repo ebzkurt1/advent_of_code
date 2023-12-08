@@ -40,6 +40,40 @@ fn get_star_indices(line: &str) -> Vec<u32> {
     star_indices
 }
 
+fn find_number(matrix: &Vec<Vec<u32>>, target: u32) -> Option<(usize)> {
+    for (i, row) in matrix.iter().enumerate() {
+        for (j, &value) in row.iter().enumerate() {
+            if value == target {
+                return Some(i);
+            }
+        }
+    }
+    None
+}
+
+fn construct_number(matrix: &Vec<Vec<u32>>, target: usize) -> u32 {
+    let sub_vec: Vec<u32> = matrix[target];
+    sub_vec
+        .iter()
+        .map(|&index| current_line.chars().nth(index as usize).unwrap())
+        .collect::<String>()
+        .parse()
+        .unwrap_or(0);
+}
+
+fn gear_ratio(prev_line: &str, current_line: &str, next_line: &str, total: &mut u32) {
+    let (prev_chars, _) = get_number_indices(prev_line);
+    let (current_char, current_indices) = get_star_indices(current_line);
+    let (next_chars, _) = get_number_indices(next_line);
+    let ratio1: u32 = 1;
+    for sub_vec in current_indices.iter() {
+        for c_index in sub_vec.iter() {
+            if c_index > &0 {
+                let c_index = *c_index as usize;
+                if let Some(num_index) = find_number(prev_chars, c_index - 1) {
+
+
+
 fn add_for_first_line(current_line: &str, next_line: &str, total: &mut u32) {
     let (current_chars, current_indices) = get_number_indices(current_line);
     let (next_chars, _) = get_number_indices(next_line);
