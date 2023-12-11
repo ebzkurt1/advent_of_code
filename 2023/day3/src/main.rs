@@ -51,28 +51,23 @@ fn find_number(matrix: &Vec<Vec<u32>>, target: u32) -> Option<(usize)> {
     None
 }
 
-fn construct_number(matrix: &Vec<Vec<u32>>, target: usize) -> u32 {
-    let sub_vec: Vec<u32> = matrix[target];
-    sub_vec
-        .iter()
-        .map(|&index| current_line.chars().nth(index as usize).unwrap())
-        .collect::<String>()
-        .parse()
-        .unwrap_or(0);
+fn get_near_numbers(star_index: u32, number_indices: &Vec<Vec<u32>>) {
+    for (index, row) in number_indices.iter().enumerate() {
+        if row.contains(star_index - 1) || row.contains(star_index) || row.contains(star_index + 1) {
+            return Some(index);
+        }
+    }
+    None
 }
 
 fn gear_ratio(prev_line: &str, current_line: &str, next_line: &str, total: &mut u32) {
     let (prev_chars, _) = get_number_indices(prev_line);
-    let (current_char, current_indices) = get_star_indices(current_line);
+    let (current_char, current_indices) = get_number_indices(current_line);
+    let star_indices: Vec<u32> = get_star_indices(current_line);
     let (next_chars, _) = get_number_indices(next_line);
     let ratio1: u32 = 1;
-    for sub_vec in current_indices.iter() {
-        for c_index in sub_vec.iter() {
-            if c_index > &0 {
-                let c_index = *c_index as usize;
-                if let Some(num_index) = find_number(prev_chars, c_index - 1) {
-
-
+    println!("{:?}", star_indices);
+}
 
 fn add_for_first_line(current_line: &str, next_line: &str, total: &mut u32) {
     let (current_chars, current_indices) = get_number_indices(current_line);
@@ -155,13 +150,9 @@ fn main() -> std::io::Result<()> {
     }
     let n = line_vec.len();
     for index in 1..n - 1 {
-        add_numbers_in_line(&line_vec[index - 1], &line_vec[index], &line_vec[index + 1], &mut total);
+        gear_ratio(&line_vec[index - 1], &line_vec[index], &line_vec[index + 1], &mut total);
         println!("{}", total);
     }
-    add_for_first_line(&line_vec[0], &line_vec[1], &mut total);
-    println!("{}", total);
-    add_for_first_line(&line_vec[line_vec.len() - 1], &line_vec[line_vec.len() - 2], &mut total);
-    println!("{}", total);
 
     Ok(())
 }
